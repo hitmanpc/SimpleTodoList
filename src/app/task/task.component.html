@@ -1,0 +1,41 @@
+<article class="task" [class.completed]="task.status === completedStatus">
+  @if (isEditing) {
+    <form [formGroup]="editForm" (ngSubmit)="saveTask()" class="edit-form">
+      <label>
+        <span>Task</span>
+        <input type="text" formControlName="title" maxlength="100" />
+      </label>
+      <label>
+        <span>Status</span>
+        <select formControlName="status">
+          @for (status of statuses; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </label>
+      <div class="edit-actions">
+        <button type="button" class="text-button" (click)="cancelEditing()">Cancel</button>
+        <button type="submit" class="primary-button" [disabled]="editForm.invalid">Save</button>
+      </div>
+    </form>
+  } @else {
+        <div class="task-content">
+      <h2>{{ task.title }}</h2>
+      <span class="status" [attr.data-status]="task.status">{{ task.status }}</span>
+    </div>
+
+    <div class="task-actions">
+      <button type="button" class="icon-button" (click)="startEditing()" aria-label="Edit task">
+        Edit
+      </button>
+      <button
+        type="button"
+        class="icon-button delete-button"
+        (click)="deleteTask()"
+        aria-label="Delete task"
+      >
+        Delete
+      </button>
+    </div>
+  }
+</article>

@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-task-form {
+  margin: 1.5rem 0;
+}
+
+.add-task-form label,
+.validation-message {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.add-task-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-task-row input {
+  flex: 1;
+  padding: 0.5rem;
+}
+
+button {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.validation-message {
+  color: #b00020;
+}
+
+.empty-state {
+  text-align: center;
+}

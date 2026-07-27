@@ -1,0 +1,55 @@
+.task {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-content h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.completed h2 {
+  text-decoration: line-through;
+}
+
+.task-actions,
+.edit-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-form {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+  align-items: end;
+}
+
+.edit-form label span {
+  display: block;
+}
+
+.edit-form label:first-child {
+  flex: 1;
+}
+
+.edit-form input,
+.edit-form select {
+  width: 100%;
+  padding: 0.4rem;
+}
+
+@media (max-width: 600px) {
+  .task,
+  .edit-form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
