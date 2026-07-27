@@ -1,59 +1,83 @@
-# TodoAssessment
+# Todo Assessment
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.7.
+A simple to-do list built with Angular 22. The project demonstrates reactive forms,
+property and event binding, reusable components, dependency injection, and browser
+storage without a database.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- Display a list of tasks
+- Add a task using a validated reactive form
+- Edit a task's title and status
+- Delete a task
+- Persist tasks in browser `localStorage`
+- Continue in memory when browser storage is unavailable
+- Restrict task status to:
+  - `New`
+  - `InProgress`
+  - `Rejected`
+  - `Verified`
+  - `Completed`
 
-```bash
-ng serve
+## Project structure
+
+```text
+src/app/
+├── app.ts                         Main application component
+├── app.html                       Task form and task list
+├── app.spec.ts                    Application component tests
+├── services/
+│   ├── task.service.ts            Task state, CRUD, and persistence
+│   └── task.service.spec.ts       Task service tests
+└── task/
+    ├── task.component.ts          Reusable task component
+    ├── task.component.html
+    ├── task.component.scss
+    └── task.model.ts              Task model and status constants
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The main component passes each task to `TaskComponent` through `@Input`. Task updates
+and deletions are sent back through `@Output` events. `TaskService` owns task state
+and persistence so that components remain focused on forms and presentation.
 
-## Code scaffolding
+Storage is provided through the injectable `TASK_STORAGE` token. The application
+uses `window.localStorage`, while unit tests use isolated in-memory storage.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Requirements
 
-```bash
-ng generate component component-name
-```
+- WSL with NVM
+- Node.js 26 (tested with 26.1.0)
+- npm
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Setup
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+From WSL:
 
 ```bash
-ng build
+nvm use 26
+npm install
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open `http://localhost:4200/`.
 
-## Running unit tests
+## Tests
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Run the Vitest unit tests:
 
 ```bash
-ng test
+nvm use 26
+npm test -- --watch=false
 ```
 
-## Running end-to-end tests
+The test suite covers the main component and the task service, including adding,
+updating, deleting, and protecting the service's internal task collection.
 
-For end-to-end (e2e) testing, run:
+## Production build
 
 ```bash
-ng e2e
+nvm use 26
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Build output is written to `dist/todoAssessment/`.

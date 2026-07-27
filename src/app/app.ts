@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TaskService } from './services/task.service';
 import { TaskComponent } from './task/task.component';
-import { TASK_STATUS, TASK_STATUSES, Task, TaskStatus } from './task/task.model';
-
-const STORAGE_KEY = 'todo-assessment.tasks';
+import { TASK_STATUS, TASK_STATUSES, Task } from './task/task.model';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +11,8 @@ const STORAGE_KEY = 'todo-assessment.tasks';
   styleUrl: './app.scss',
 })
 export class App {
+  private readonly taskService = inject(TaskService);
+
   readonly statuses = TASK_STATUSES;
   readonly taskForm = new FormGroup({
     title: new FormControl('', {
@@ -20,7 +21,7 @@ export class App {
     }),
   });
 
-  tasks: Task[] = this.loadTasks();
+  tasks: Task[] = this.taskService.getTasks();
 
   get titleControl(): FormControl<string> {
     return this.taskForm.controls.title;
@@ -42,53 +43,15 @@ export class App {
       return;
     }
 
-    this.tasks = [
-      {
-        id: globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`,
-        title,
-        status: TASK_STATUS.NEW,
-      },
-      ...this.tasks,
-    ];
+    this.tasks = this.taskService.addTask(title);
     this.taskForm.reset();
-    this.saveTasks();
   }
 
   updateTask(updatedTask: Task): void {
-    this.tasks = this.tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task));
-    this.saveTasks();
+    this.tasks = this.taskService.updateTask(updatedTask);
   }
 
   deleteTask(taskId: string): void {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
-    this.saveTasks();
-  }
-
-  private loadTasks(): Task[] {
-    try {
-      const storedTasks = localStorage.getItem(STORAGE_KEY);
-      if (!storedTasks) {
-        return [];
-      }
-
-      const parsedTasks = JSON.parse(storedTasks) as Task[];
-      return Array.isArray(parsedTasks)
-        ? parsedTasks.filter(
-            (task) =>
-              typeof task.id === 'string' &&
-              typeof task.title === 'string' &&
-              TASK_STATUSES.includes(task.status as TaskStatus),
-          )
-        : [];
-    } catch {
-      return [];
-    }
-  }
-
-  private saveTasks(): void {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
-    } catch {
-    }
+    this.tasks = this.taskService.deleteTask(taskId);
   }
 }
