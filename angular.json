@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "todoAssessment": {
+    "simpletodolist": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "todoAssessment:build:production"
+              "buildTarget": "simpletodolist:build:production"
             },
             "development": {
-              "buildTarget": "todoAssessment:build:development"
+              "buildTarget": "simpletodolist:build:development"
             }
           },
           "defaultConfiguration": "development"

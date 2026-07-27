@@ -1,4 +1,4 @@
-# Todo Assessment
+# Simple Todo List
 
 A simple to-do list built with Angular 22. The project demonstrates reactive forms,
 property and event binding, reusable components, dependency injection, and browser
@@ -80,4 +80,4 @@ nvm use 26
 npm run build
 ```
 
-Build output is written to `dist/todoAssessment/`.
+Build output is written to `dist/simpletodolist/`.

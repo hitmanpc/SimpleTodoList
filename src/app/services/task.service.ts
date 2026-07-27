@@ -1,7 +1,7 @@
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { TASK_STATUS, TASK_STATUSES, Task, TaskStatus } from '../task/task.model';
 
-const STORAGE_KEY = 'todo-assessment.tasks';
+const STORAGE_KEY = 'simpletodolist.tasks';
 
 export interface TaskStorage {
   getItem(key: string): string | null;
